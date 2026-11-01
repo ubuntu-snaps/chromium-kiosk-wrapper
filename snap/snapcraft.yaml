@@ -28,11 +28,7 @@ apps:
       - audio-playback
       - audio-record
       - camera
-      - removable-media
-      - home
-      - browser-support
-      - system-files
-      - content[chromium]
+      - chromium
 
 parts:
   chromium-kiosk-launcher:
@@ -66,8 +62,6 @@ parts:
 slots:
   kiosk-session:
     interface: wayland
-    wayland:
-      socket-dir: $SNAP_DATA/wayland
 
 plugs:
   chromium:
