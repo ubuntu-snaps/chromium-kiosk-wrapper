@@ -1,0 +1,21 @@
+name: hello
+version: git
+summary: hello
+description: hello
+
+base: core24
+grade: stable
+confinement: strict
+
+platforms:
+  amd64:
+  arm64:
+
+apps:
+  hello:
+    command: bin/hello.sh
+
+parts:
+  overlay:
+    plugin: dump
+    source: overlay
