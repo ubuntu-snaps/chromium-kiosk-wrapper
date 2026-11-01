@@ -32,7 +32,7 @@ apps:
       - home
       - browser-support
       - system-files
-      - content[chromium-browser]
+      - content[chromium]
 
 parts:
   chromium-kiosk-launcher:
@@ -50,7 +50,7 @@ slots:
       socket-dir: $SNAP_DATA/wayland
 
 plugs:
-  chromium-browser:
+  chromium:
     interface: content
     target: $SNAP/chromium
-    default-provider: chromium-browser
+    default-provider: chromium

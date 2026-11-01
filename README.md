@@ -8,7 +8,7 @@ A snap for running Chromium in kiosk mode on Ubuntu Core, suitable for digital s
 - Configurable URL via snap configuration
 - Auto-restart on crash
 - Wayland-only display support (for Ubuntu Core 24+)
-- Uses the `chromium-browser` snap via content interface for smaller size and easier updates
+- Uses the `chromium` snap via content interface for smaller size and easier updates
 
 ## Building
 
@@ -19,14 +19,14 @@ snapcraft
 ## Installation
 
 ```bash
-# Install the chromium-browser snap (required for content interface)
-sudo snap install chromium-browser
+# Install the chromium snap (required for content interface)
+sudo snap install chromium
 
 # Install your built snap
 sudo snap install --dangerous chromium-kiosk-wrapper_*.snap
 
 # Connect the content interface
-sudo snap connect chromium-kiosk-wrapper:chromium-browser chromium-browser:chromium-browser
+sudo snap connect chromium-kiosk-wrapper:chromium-browser chromium:chromium-browser
 
 # Connect additional interfaces for full functionality
 sudo snap connect chromium-kiosk-wrapper:wayland
