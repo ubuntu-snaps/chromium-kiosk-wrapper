@@ -1,0 +1,66 @@
+#!/bin/bash -eu
+
+# Chromium Kiosk Launcher
+# This script launches Chromium in kiosk mode for Ubuntu Core
+
+set -e
+
+# Configuration - can be overridden via snap set
+KIOSK_URL="${KIOSK_URL:-https://example.com}"
+KIOSK_USER_DATA_DIR="${SNAP_DATA}/chromium-profile"
+KIOSK_FLAGS="${KIOSK_FLAGS:-}"
+
+# Ensure user data directory exists
+mkdir -p "${KIOSK_USER_DATA_DIR}"
+
+# Wayland setup
+export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-0}"
+export XDG_RUNTIME_DIR="${SNAP_DATA}/wayland"
+mkdir -p "${XDG_RUNTIME_DIR}"
+
+# Chromium binary from content interface
+CHROMIUM_BIN="${SNAP}/chromium/usr/lib/chromium-browser/chrome"
+
+if [ ! -x "${CHROMIUM_BIN}" ]; then
+    # Fallback to system chromium if content interface not connected
+    CHROMIUM_BIN=$(which chromium-browser 2>/dev/null || which chromium 2>/dev/null || true)
+fi
+
+if [ ! -x "${CHROMIUM_BIN}" ]; then
+    echo "ERROR: Chromium binary not found. Ensure chromium-browser snap is installed and connected."
+    exit 1
+fi
+
+# Build chromium command
+CHROMIUM_CMD=(
+    "${CHROMIUM_BIN}"
+    --kiosk
+    --no-first-run
+    --no-default-browser-check
+    --disable-infobars
+    --disable-session-crashed-bubble
+    --disable-component-update
+    --disable-background-networking
+    --disable-background-timer-throttling
+    --disable-renderer-backgrounding
+    --disable-features=TranslateUI
+    --disable-ipc-flooding-protection
+    --password-store=basic
+    --ozone-platform=wayland
+    --enable-features=WaylandWindowDecorations
+    --user-data-dir="${KIOSK_USER_DATA_DIR}"
+    "${KIOSK_URL}"
+)
+
+# Add any extra flags from configuration
+if [ -n "${KIOSK_FLAGS}" ]; then
+    # shellcheck disable=SC2206
+    CHROMIUM_CMD+=(${KIOSK_FLAGS})
+fi
+
+echo "Starting Chromium in kiosk mode..."
+echo "URL: ${KIOSK_URL}"
+echo "User data: ${KIOSK_USER_DATA_DIR}"
+echo "Command: ${CHROMIUM_CMD[*]}"
+
+exec "${CHROMIUM_CMD[@]}"

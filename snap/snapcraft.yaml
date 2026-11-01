@@ -1,7 +1,9 @@
-name: hello
+name: chromium-kiosk-wrapper
 version: git
-summary: hello
-description: hello
+summary: Chromium Kiosk Wrapper for Ubuntu Core
+description: |
+  A snap that runs Chromium in kiosk mode, suitable for digital signage
+  and dedicated display applications on Ubuntu Core.
 
 base: core24
 grade: stable
@@ -9,13 +11,46 @@ confinement: strict
 
 platforms:
   amd64:
-  arm64:
 
 apps:
-  hello:
-    command: bin/hello.sh
+  chromium-kiosk:
+    command: bin/chromium-kiosk-launcher
+    daemon: simple
+    restart-condition: always
+    environment:
+      WAYLAND_DISPLAY: "wayland-0"
+      XDG_RUNTIME_DIR: "$SNAP_DATA/wayland"
+    plugs:
+      - network
+      - network-bind
+      - wayland
+      - opengl
+      - audio-playback
+      - audio-record
+      - camera
+      - removable-media
+      - home
+      - browser-support
+      - system-files
+      - content[chromium-browser]
 
 parts:
-  overlay:
+  chromium-kiosk-launcher:
     plugin: dump
-    source: overlay
+    source: scripts
+    organize:
+      chromium-kiosk-launcher: bin/chromium-kiosk-launcher
+    stage:
+      - bin/chromium-kiosk-launcher
+
+slots:
+  kiosk-session:
+    interface: wayland
+    wayland:
+      socket-dir: $SNAP_DATA/wayland
+
+plugs:
+  chromium-browser:
+    interface: content
+    target: $SNAP/chromium
+    default-provider: chromium-browser

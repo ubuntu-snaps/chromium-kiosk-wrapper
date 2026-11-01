@@ -1,4 +1,17 @@
 #!/bin/bash -eu
 # https://snapcraft.io/docs/supported-snap-hooks
 
-snapctl restart "$SNAP_INSTANCE_NAME"
+# Read configuration and restart service if changed
+KIOSK_URL=$(snapctl get kiosk-url 2>/dev/null || echo "")
+KIOSK_FLAGS=$(snapctl get kiosk-flags 2>/dev/null || echo "")
+
+if [ -n "${KIOSK_URL}" ]; then
+    snapctl set kiosk-url="${KIOSK_URL}"
+fi
+
+if [ -n "${KIOSK_FLAGS}" ]; then
+    snapctl set kiosk-flags="${KIOSK_FLAGS}"
+fi
+
+# Restart the daemon to apply new configuration
+snapctl restart "${SNAP_INSTANCE_NAME}.chromium-kiosk"
