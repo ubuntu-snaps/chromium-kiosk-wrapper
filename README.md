@@ -38,14 +38,14 @@ sudo snap connect chromium-kiosk-wrapper:removable-media
 
 ## Configuration
 
-Configure the kiosk URL and additional Chromium flags:
+Configure the URL and additional Chromium flags:
 
 ```bash
 # Set the URL to display (default: https://example.com)
-sudo snap set chromium-kiosk-wrapper kiosk-url="https://your-dashboard.example.com"
+sudo snap set chromium-kiosk-wrapper url="https://your-dashboard.example.com"
 
 # Set additional Chromium flags (optional)
-sudo snap set chromium-kiosk-wrapper kiosk-flags="--disable-web-security --allow-running-insecure-content"
+sudo snap set chromium-kiosk-wrapper flags="--disable-web-security --allow-running-insecure-content"
 ```
 
 The service will automatically restart when configuration changes.

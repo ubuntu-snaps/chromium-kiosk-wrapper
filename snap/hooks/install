@@ -2,5 +2,5 @@
 # https://snapcraft.io/docs/supported-snap-hooks
 
 # Set default configuration on install
-snapctl set kiosk-url="https://example.com"
-snapctl set kiosk-flags=""
+snapctl set url="https://example.com"
+snapctl set flags=""

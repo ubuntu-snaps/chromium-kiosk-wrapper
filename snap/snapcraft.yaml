@@ -13,7 +13,7 @@ platforms:
   amd64:
 
 apps:
-  chromium-kiosk:
+  daemon:
     command: bin/chromium-kiosk-launcher
     daemon: simple
     restart-condition: always

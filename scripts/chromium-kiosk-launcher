@@ -6,12 +6,12 @@
 set -e
 
 # Configuration - can be overridden via snap set
-KIOSK_URL="${KIOSK_URL:-https://example.com}"
-KIOSK_USER_DATA_DIR="${SNAP_DATA}/chromium-profile"
-KIOSK_FLAGS="${KIOSK_FLAGS:-}"
+URL="${URL:-$(snapctl get url 2>/dev/null || echo https://example.com)}"
+FLAGS="${FLAGS:-$(snapctl get flags 2>/dev/null || echo "")}"
+USER_DATA_DIR="${SNAP_DATA}/chromium-profile"
 
 # Ensure user data directory exists
-mkdir -p "${KIOSK_USER_DATA_DIR}"
+mkdir -p "${USER_DATA_DIR}"
 
 # Wayland setup
 export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-0}"
@@ -53,19 +53,19 @@ CHROMIUM_CMD=(
     --password-store=basic
     --ozone-platform=wayland
     --enable-features=WaylandWindowDecorations
-    --user-data-dir="${KIOSK_USER_DATA_DIR}"
-    "${KIOSK_URL}"
+    --user-data-dir="${USER_DATA_DIR}"
+    "${URL}"
 )
 
 # Add any extra flags from configuration
-if [ -n "${KIOSK_FLAGS}" ]; then
+if [ -n "${FLAGS}" ]; then
     # shellcheck disable=SC2206
-    CHROMIUM_CMD+=(${KIOSK_FLAGS})
+    CHROMIUM_CMD+=(${FLAGS})
 fi
 
 echo "Starting Chromium in kiosk mode..."
-echo "URL: ${KIOSK_URL}"
-echo "User data: ${KIOSK_USER_DATA_DIR}"
+echo "URL: ${URL}"
+echo "User data: ${USER_DATA_DIR}"
 echo "Command: ${CHROMIUM_CMD[*]}"
 
 exec "${CHROMIUM_CMD[@]}"
