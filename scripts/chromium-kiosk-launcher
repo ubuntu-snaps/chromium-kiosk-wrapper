@@ -6,7 +6,7 @@
 set -e
 
 # Configuration - can be overridden via snap set
-URL="${URL:-$(snapctl get url 2>/dev/null || echo https://example.com)}"
+URL="${URL:-$(snapctl get url 2>/dev/null || echo http://localhost)}"
 FLAGS="${FLAGS:-$(snapctl get flags 2>/dev/null || echo "")}"
 DEBUG="${DEBUG:-$(snapctl get debug 2>/dev/null || echo false)}"
 USER_DATA_DIR="${SNAP_DATA}/chromium-profile"

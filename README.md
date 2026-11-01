@@ -41,7 +41,7 @@ sudo snap connect chromium-kiosk-wrapper:removable-media
 Configure the URL, additional Chromium flags, and debug mode:
 
 ```bash
-# Set the URL to display (default: https://example.com)
+# Set the URL to display (default: http://localhost)
 sudo snap set chromium-kiosk-wrapper url="https://your-dashboard.example.com"
 
 # Set additional Chromium flags (optional)

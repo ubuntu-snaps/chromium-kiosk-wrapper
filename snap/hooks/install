@@ -2,6 +2,6 @@
 # https://snapcraft.io/docs/supported-snap-hooks
 
 # Set default configuration on install
-snapctl set url="https://example.com"
+snapctl set url="http://localhost"
 snapctl set flags=""
 snapctl set debug=false
