@@ -59,10 +59,6 @@ parts:
     prime:
       - extensions
 
-slots:
-  kiosk-session:
-    interface: wayland
-
 plugs:
   chromium:
     interface: content
