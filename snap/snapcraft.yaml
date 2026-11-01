@@ -50,11 +50,12 @@ parts:
     build-packages:
       - curl
       - ca-certificates
+    source: scripts
     override-build: |
       craftctl default
       # Pre-configured extension IDs
       EXTENSION_IDS="geanehlidigfgabljleifobmmlfiepke"
-      "$CRAFT_PART_SRC/../scripts/download-extensions.sh" "$CRAFT_PART_INSTALL/extensions" "$EXTENSION_IDS"
+      "$CRAFT_PART_SRC/download-extensions.sh" "$CRAFT_PART_INSTALL/extensions" "$EXTENSION_IDS"
     organize:
       extensions: extensions
     stage:
