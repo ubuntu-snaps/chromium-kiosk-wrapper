@@ -10,6 +10,7 @@ URL="${URL:-$(snapctl get url 2>/dev/null || echo http://localhost)}"
 FLAGS="${FLAGS:-$(snapctl get flags 2>/dev/null || echo "")}"
 DEBUG="${DEBUG:-$(snapctl get debug 2>/dev/null || echo false)}"
 USER_DATA_DIR="${SNAP_DATA}/chromium-profile"
+EXTENSIONS_DIR="${SNAP}/extensions"
 
 # Ensure user data directory exists
 mkdir -p "${USER_DATA_DIR}"
@@ -67,6 +68,21 @@ fi
 # Enable remote debugging if debug is true
 if [ "${DEBUG}" = "true" ]; then
     CHROMIUM_CMD+=(--remote-debugging-port=9222 --remote-debugging-address=0.0.0.0)
+fi
+
+# Load extensions if available
+if [ -d "${EXTENSIONS_DIR}" ]; then
+    EXTENSION_FILES=()
+    for ext in "${EXTENSIONS_DIR}"/*.crx; do
+        [ -f "$ext" ] && EXTENSION_FILES+=("$ext")
+    done
+    if [ ${#EXTENSION_FILES[@]} -gt 0 ]; then
+        # Join paths with comma for --load-extension
+        IFS=,
+        CHROMIUM_CMD+=(--load-extension="${EXTENSION_FILES[*]}")
+        unset IFS
+        echo "Loading ${#EXTENSION_FILES[@]} extension(s): ${EXTENSION_FILES[*]}"
+    fi
 fi
 
 echo "Starting Chromium in kiosk mode..."

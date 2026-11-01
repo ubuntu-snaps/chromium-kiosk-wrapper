@@ -9,12 +9,15 @@ A snap for running Chromium in kiosk mode on Ubuntu Core, suitable for digital s
 - Auto-restart on crash
 - Wayland-only display support (for Ubuntu Core 24+)
 - Uses the `chromium` snap via content interface for smaller size and easier updates
+- Load Chrome extensions at build time via extension IDs
 
 ## Building
 
 ```bash
 snapcraft
 ```
+
+Extensions are pre-configured in `snap/snapcraft.yaml` and downloaded from the Chrome Web Store at build time.
 
 ## Installation
 

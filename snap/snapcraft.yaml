@@ -40,8 +40,27 @@ parts:
     source: scripts
     organize:
       chromium-kiosk-launcher: bin/chromium-kiosk-launcher
+      download-extensions.sh: bin/download-extensions.sh
     stage:
       - bin/chromium-kiosk-launcher
+      - bin/download-extensions.sh
+
+  extensions:
+    plugin: nil
+    build-packages:
+      - curl
+      - ca-certificates
+    override-build: |
+      craftctl default
+      # Pre-configured extension IDs
+      EXTENSION_IDS="geanehlidigfgabljleifobmmlfiepke"
+      "$CRAFT_PART_SRC/../scripts/download-extensions.sh" "$CRAFT_PART_INSTALL/extensions" "$EXTENSION_IDS"
+    organize:
+      extensions: extensions
+    stage:
+      - extensions
+    prime:
+      - extensions
 
 slots:
   kiosk-session:
