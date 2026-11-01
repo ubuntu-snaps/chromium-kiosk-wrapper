@@ -4,3 +4,4 @@
 # Set default configuration on install
 snapctl set url="https://example.com"
 snapctl set flags=""
+snapctl set debug=false

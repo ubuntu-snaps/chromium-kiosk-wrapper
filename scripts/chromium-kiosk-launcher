@@ -8,6 +8,7 @@ set -e
 # Configuration - can be overridden via snap set
 URL="${URL:-$(snapctl get url 2>/dev/null || echo https://example.com)}"
 FLAGS="${FLAGS:-$(snapctl get flags 2>/dev/null || echo "")}"
+DEBUG="${DEBUG:-$(snapctl get debug 2>/dev/null || echo false)}"
 USER_DATA_DIR="${SNAP_DATA}/chromium-profile"
 
 # Ensure user data directory exists
@@ -63,9 +64,15 @@ if [ -n "${FLAGS}" ]; then
     CHROMIUM_CMD+=(${FLAGS})
 fi
 
+# Enable remote debugging if debug is true
+if [ "${DEBUG}" = "true" ]; then
+    CHROMIUM_CMD+=(--remote-debugging-port=9222 --remote-debugging-address=0.0.0.0)
+fi
+
 echo "Starting Chromium in kiosk mode..."
 echo "URL: ${URL}"
 echo "User data: ${USER_DATA_DIR}"
+echo "Debug: ${DEBUG}"
 echo "Command: ${CHROMIUM_CMD[*]}"
 
 exec "${CHROMIUM_CMD[@]}"

@@ -4,6 +4,7 @@
 # Read configuration and restart service if changed
 URL=$(snapctl get url 2>/dev/null || echo "")
 FLAGS=$(snapctl get flags 2>/dev/null || echo "")
+DEBUG=$(snapctl get debug 2>/dev/null || echo "")
 
 if [ -n "${URL}" ]; then
     snapctl set url="${URL}"
@@ -11,6 +12,10 @@ fi
 
 if [ -n "${FLAGS}" ]; then
     snapctl set flags="${FLAGS}"
+fi
+
+if [ -n "${DEBUG}" ]; then
+    snapctl set debug="${DEBUG}"
 fi
 
 # Restart the daemon to apply new configuration

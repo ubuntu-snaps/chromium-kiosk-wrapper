@@ -38,7 +38,7 @@ sudo snap connect chromium-kiosk-wrapper:removable-media
 
 ## Configuration
 
-Configure the URL and additional Chromium flags:
+Configure the URL, additional Chromium flags, and debug mode:
 
 ```bash
 # Set the URL to display (default: https://example.com)
@@ -46,9 +46,14 @@ sudo snap set chromium-kiosk-wrapper url="https://your-dashboard.example.com"
 
 # Set additional Chromium flags (optional)
 sudo snap set chromium-kiosk-wrapper flags="--disable-web-security --allow-running-insecure-content"
+
+# Enable remote debugging on port 9222 (default: false)
+sudo snap set chromium-kiosk-wrapper debug=true
 ```
 
 The service will automatically restart when configuration changes.
+
+When `debug=true`, Chromium's remote debugging port (9222) will be accessible at `http://<device-ip>:9222` for use with Chrome DevTools.
 
 ## Usage on Ubuntu Core
 
