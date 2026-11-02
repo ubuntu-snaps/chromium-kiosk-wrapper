@@ -45,6 +45,17 @@ parts:
     plugin: nil
     stage-snaps:
       - chromium
+    override-build: |
+      craftctl default
+      # Fix external symlink: usr/bin/xdg-email -> /usr/bin/xdg-open
+      if [ -L "${CRAFT_PART_INSTALL}/usr/bin/xdg-email" ]; then
+          rm -f "${CRAFT_PART_INSTALL}/usr/bin/xdg-email"
+      fi
+      # Fix chrome-sandbox permissions (should be 4755 for setuid)
+      SANDBOX="${CRAFT_PART_INSTALL}/usr/lib/chromium-browser/chrome-sandbox"
+      if [ -f "${SANDBOX}" ]; then
+          chmod 4755 "${SANDBOX}"
+      fi
 
   extensions:
     plugin: nil
