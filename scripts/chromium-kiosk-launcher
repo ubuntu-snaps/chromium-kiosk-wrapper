@@ -27,6 +27,7 @@ CHROMIUM_BIN="${SNAP}/usr/lib/chromium-browser/chrome"
 CHROMIUM_CMD=(
     "${CHROMIUM_BIN}"
     --kiosk
+    --no-sandbox
     --no-first-run
     --no-default-browser-check
     --disable-infobars
