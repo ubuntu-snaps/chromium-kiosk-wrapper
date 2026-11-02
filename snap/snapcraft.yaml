@@ -51,10 +51,10 @@ parts:
       if [ -L "${CRAFT_PART_INSTALL}/usr/bin/xdg-email" ]; then
           rm -f "${CRAFT_PART_INSTALL}/usr/bin/xdg-email"
       fi
-      # Fix chrome-sandbox permissions (should be 4755 for setuid)
+      # Fix chrome-sandbox permissions (remove setuid, snap confinement handles sandboxing)
       SANDBOX="${CRAFT_PART_INSTALL}/usr/lib/chromium-browser/chrome-sandbox"
       if [ -f "${SANDBOX}" ]; then
-          chmod 4755 "${SANDBOX}"
+          chmod 755 "${SANDBOX}"
       fi
 
   extensions:
