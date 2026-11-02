@@ -14,9 +14,12 @@ platforms:
 
 apps:
   daemon:
+    extensions:
+      - gnome
     command: bin/chromium-kiosk-launcher
     daemon: simple
     restart-condition: always
+    restart-delay: 3s
     environment:
       WAYLAND_DISPLAY: "wayland-0"
       XDG_RUNTIME_DIR: "$SNAP_DATA/wayland"
