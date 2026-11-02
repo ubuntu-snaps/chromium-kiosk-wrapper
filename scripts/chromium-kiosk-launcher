@@ -21,27 +21,7 @@ export XDG_RUNTIME_DIR="${SNAP_DATA}/wayland"
 mkdir -p "${XDG_RUNTIME_DIR}"
 
 # Chromium binary from stage-snaps
-CHROMIUM_BIN="${SNAP}/chromium/usr/lib/chromium-browser/chrome"
-
-if [ ! -x "${CHROMIUM_BIN}" ]; then
-    # Try alternative paths in the staged chromium snap
-    CHROMIUM_BIN="${SNAP}/chromium/usr/bin/chromium-browser"
-fi
-
-if [ ! -x "${CHROMIUM_BIN}" ]; then
-    # Try snap run style path
-    CHROMIUM_BIN="${SNAP}/chromium/chromium"
-fi
-
-if [ ! -x "${CHROMIUM_BIN}" ]; then
-    echo "ERROR: Chromium binary not found in staged snap."
-    echo "Checked paths:"
-    echo "  ${SNAP}/chromium/usr/lib/chromium-browser/chrome"
-    echo "  ${SNAP}/chromium/usr/bin/chromium-browser"
-    echo "  ${SNAP}/chromium/chromium"
-    find "${SNAP}/chromium" -type f -name "chrome" -o -name "chromium*" 2>/dev/null | head -20
-    exit 1
-fi
+CHROMIUM_BIN="${SNAP}/usr/lib/chromium-browser/chrome"
 
 # Build chromium command
 CHROMIUM_CMD=(

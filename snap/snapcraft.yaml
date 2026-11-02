@@ -35,10 +35,8 @@ parts:
     source: scripts
     organize:
       chromium-kiosk-launcher: bin/chromium-kiosk-launcher
-      download-extensions.sh: bin/download-extensions.sh
     stage:
       - bin/chromium-kiosk-launcher
-      - bin/download-extensions.sh
 
   chromium:
     plugin: nil
