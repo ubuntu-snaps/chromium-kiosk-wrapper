@@ -28,7 +28,6 @@ apps:
       - audio-playback
       - audio-record
       - camera
-      - browser-support
 
 parts:
   chromium-kiosk-launcher:
