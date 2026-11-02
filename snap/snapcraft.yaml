@@ -28,7 +28,7 @@ apps:
       - audio-playback
       - audio-record
       - camera
-      - chromium
+      - browser-support
 
 parts:
   chromium-kiosk-launcher:
@@ -40,6 +40,11 @@ parts:
     stage:
       - bin/chromium-kiosk-launcher
       - bin/download-extensions.sh
+
+  chromium:
+    plugin: nil
+    stage-snaps:
+      - chromium
 
   extensions:
     plugin: nil
@@ -58,9 +63,3 @@ parts:
       - extensions
     prime:
       - extensions
-
-plugs:
-  chromium:
-    interface: content
-    target: $SNAP/chromium
-    default-provider: chromium
